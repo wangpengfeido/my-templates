@@ -1,0 +1,51 @@
+{
+  "presets": [
+    "@babel/preset-typescript",
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": "3.6.5"
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@arco-design/web-react",
+        "libraryDirectory": "es",
+        "camel2DashComponentName": false,
+        "style": true
+      },
+      "arco-design"
+    ],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "@arco-design/web-react/icon",
+        "libraryDirectory": "react-icon",
+        "camel2DashComponentName": false
+      },
+      "arco-design-icon"
+    ],
+    [
+      "babel-plugin-import",
+      {
+        "libraryName": "lodash",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "lodash"
+    ],
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-class-properties"
+  ]
+}
