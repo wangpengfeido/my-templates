@@ -5,9 +5,6 @@ const commonWebpackConfig = require("./webpack.config.common");
 module.exports = merge(commonWebpackConfig, {
   mode: "development",
   devtool: "source-map",
-  entry: {
-    app: ["./src/index.js"],
-  },
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].js",
@@ -15,5 +12,7 @@ module.exports = merge(commonWebpackConfig, {
   },
   devServer: {
     open: true,
+    port: 8080,
+    historyApiFallback: true,
   },
 });
