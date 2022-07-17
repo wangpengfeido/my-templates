@@ -1,16 +1,16 @@
 const webpack = require('webpack');
 const path = require('path');
 const { merge } = require('webpack-merge');
-const commonWebpackConfig = require('./webpack.config.common');
+const commonWebpackConfig = require('./webpack.config.renderer.common');
 
 module.exports = merge(commonWebpackConfig, {
   mode: 'development',
   devtool: 'source-map',
   entry: {
-    app: ['react-hot-loader/patch', './src/index.tsx'],
+    app: ['react-hot-loader/patch', path.resolve(__dirname, '../src/renderer/index.tsx')],
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '../dist'),
     filename: '[name].js',
     publicPath: '/',
   },
@@ -26,12 +26,9 @@ module.exports = merge(commonWebpackConfig, {
     }),
   ],
   devServer: {
+    port: 9091,
     hot: true,
-    stats: 'minimal',
     open: true,
     historyApiFallback: true,
-    overlay: true,
-    headers: {},
-    proxy: {},
   },
 });

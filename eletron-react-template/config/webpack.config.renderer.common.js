@@ -6,16 +6,12 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: './src/index.tsx',
+    app: path.resolve(__dirname, '../src/renderer/index.tsx'),
   },
-  output: {
-    libraryTarget: 'umd',
-    globalObject: 'window',
-    jsonpFunction: 'webpackjsonp_net_component',
-  },
+  output: {},
   resolve: {
     alias: {
-      src: path.resolve(__dirname, 'src/'),
+      src: path.resolve(__dirname, '../src/renderer/'),
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
@@ -24,7 +20,34 @@ module.exports = {
       {
         test: /\.(j|t)sx?$/,
         exclude: /node_modules/,
-        use: [{ loader: 'babel-loader' }],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-typescript',
+                '@babel/preset-react',
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'usage',
+                    corejs: '3.6.5',
+                  },
+                ],
+              ],
+              plugins: [
+                [
+                  '@babel/plugin-proposal-decorators',
+                  {
+                    legacy: true,
+                  },
+                ],
+                'react-hot-loader/babel',
+                '@babel/plugin-proposal-class-properties',
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.less$/,
@@ -93,14 +116,8 @@ module.exports = {
   plugins: [
     new ESLintPlugin({ context: 'src', extensions: ['js', 'jsx', 'ts', 'tsx'] }),
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: path.resolve(__dirname, '../src/renderer/index.html'),
     }),
-    new CopyWebpackPlugin([
-      {
-        from: 'public',
-        to: '',
-      },
-    ]),
     new ForkTsCheckerWebpackPlugin(),
   ],
 };
